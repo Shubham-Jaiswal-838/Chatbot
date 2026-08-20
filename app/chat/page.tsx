@@ -10,6 +10,11 @@ import Sidebar from '../components/layout/Sidebar'
 export default function ChatPage() {
   const [isListening, setIsListening] = useState(false)
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
+  const [inputText, setInputText] = useState('')
+
+  const handleSuggestionSelect = (value: string) => {
+    setInputText(value)
+  }
 
   return (
     <div className="h-screen w-full bg-[#0a0a0b] md:flex md:gap-[10px] md:p-1">
@@ -45,13 +50,15 @@ export default function ChatPage() {
           </div>
 
           <div className="min-h-0 flex-1">
-            <ChatWindow />
+            <ChatWindow showEmptySuggestions={inputText.trim() === ''} onSuggestionSelect={handleSuggestionSelect} />
           </div>
 
           <div className="shrink-0">
             <ChatInput
               isListening={isListening}
               onToggleListening={() => setIsListening((prev) => !prev)}
+              text={inputText}
+              onTextChange={(v) => setInputText(v)}
             />
           </div>
         </div>

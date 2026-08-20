@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useRef, useState, useEffect } from 'react'
 import { ImagePlus, Shuffle, X, Mic, ArrowUp } from 'lucide-react'
 import { useAppDispatch } from '@/lib/hooks'
 import { addMessage } from '@/lib/features/chatSlice'
@@ -11,15 +11,36 @@ const defaultTags = ['retro', 'warm light']
 type ChatInputProps = {
   isListening: boolean
   onToggleListening: () => void
+  text?: string
+  onTextChange?: (value: string) => void
 }
 
-const ChatInput = memo(function ChatInput({ isListening, onToggleListening }: ChatInputProps) {
-  const [text, setText] = useState('')
+const ChatInput = memo(function ChatInput({
+  isListening,
+  onToggleListening,
+  text: controlledText,
+  onTextChange,
+}: ChatInputProps) {
+  const [text, setText] = useState(controlledText ?? '')
   const [tags, setTags] = useState(defaultTags)
   const [files, setFiles] = useState<File[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (controlledText !== undefined) {
+      setText(controlledText)
+    }
+  }, [controlledText])
+
+  const handleTextChange = useCallback(
+    (value: string) => {
+      setText(value)
+      onTextChange?.(value)
+    },
+    [onTextChange],
+  )
 
   const handleSubmit = useCallback(async () => {
     const trimmed = text.trim()
@@ -53,9 +74,9 @@ const ChatInput = memo(function ChatInput({ isListening, onToggleListening }: Ch
       }),
     )
 
-    setText('')
+    handleTextChange('')
     setFiles([])
-  }, [dispatch, files, text])
+  }, [dispatch, files, handleTextChange, text])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -69,13 +90,11 @@ const ChatInput = memo(function ChatInput({ isListening, onToggleListening }: Ch
 
   const handleTagClick = useCallback((tag: string) => {
     setTags((prev) => prev.filter((t) => t !== tag))
-    setText((prev) => {
-      const cleanValue = prev.trim()
-      const nextValue = cleanValue ? `${cleanValue} ${tag}` : tag
-      requestAnimationFrame(() => inputRef.current?.focus())
-      return nextValue
-    })
-  }, [])
+    const cleanValue = text.trim()
+    const nextValue = cleanValue ? `${cleanValue} ${tag}` : tag
+    requestAnimationFrame(() => inputRef.current?.focus())
+    handleTextChange(nextValue)
+  }, [handleTextChange, text])
 
   const handleFileClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -120,7 +139,7 @@ const ChatInput = memo(function ChatInput({ isListening, onToggleListening }: Ch
       <input
         ref={inputRef}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => handleTextChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Describe what needs to be created"
         className="w-full bg-transparent text-sm text-white placeholder-white/40 outline-none"

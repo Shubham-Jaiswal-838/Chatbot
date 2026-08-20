@@ -114,8 +114,8 @@ const Sidebar = memo(function Sidebar({ showCollapsedButton = true }: { showColl
           <div className="h-8 w-8 shrink-0 rounded-full bg-orange-500" />
           {!collapsed && (
             <div className="text-xs">
-              <p className="text-white">Darlene Robertson</p>
-              <p className="text-white/40">darry@gmail.com</p>
+              <p className="text-white">Shubham Jaiswal</p>
+              <p className="text-white/40">shubhamjaiswal2606@gamil.com</p>
             </div>
           )}
         </div>

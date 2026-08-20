@@ -27,7 +27,6 @@ export default function ChatHistoryList() {
         <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-4 text-center text-xs text-white/50">No chats yet</div>
       ) : (
         <div className="max-h-[30vh] overflow-y-auto pr-1 space-y-2 hide-scrollbar">
-          {/* Render draft at top if present */}
           {activeDraft && (
             <button
               key={activeDraft.id}

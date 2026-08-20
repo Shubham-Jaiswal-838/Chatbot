@@ -54,7 +54,6 @@ const createThread = (messages: Message[] = [], id = makeId('thread')): ChatThre
   updatedAt: new Date().toISOString(),
 })
 
-// Start with no persisted threads by default; opening the app shows an empty new chat (draft)
 const initialState: ChatState = {
   threads: [],
   activeThreadId: null,
@@ -66,13 +65,13 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     createNewThread: (state) => {
-          // If a draft already exists, activate it instead of creating a duplicate
+          // If a draft already exists make it active instead of new creating 
           if (state.activeDraft) {
             state.activeThreadId = state.activeDraft.id
             return
           }
 
-          // create an in-memory draft (do not persist until a message is added)
+          // do not persist until a message is added
           const draft: ChatThread = {
             ...createThread([], makeId('draft')),
           }
@@ -80,7 +79,7 @@ const chatSlice = createSlice({
           state.activeThreadId = draft.id
         },
         finalizeDraft: (state) => {
-          // move draft into threads only when it has messages
+          // add any new thread if conversation happened 
           const draft = state.activeDraft
           if (!draft) return
           if (!Array.isArray(draft.messages) || draft.messages.length === 0) return
@@ -98,20 +97,20 @@ const chatSlice = createSlice({
         },
         discardDraft: (state) => {
           state.activeDraft = null
-          // set activeThreadId to first persisted thread if available
+          // if already a thread opened and trying to open new assign old thread id 
           state.activeThreadId = state.threads[0]?.id ?? null
         },
     setActiveThread: (state, action: PayloadAction<string>) => {
       state.activeThreadId = action.payload
     },
     addMessage: (state, action: PayloadAction<Message>) => {
-          // If there's a draft active (not persisted), add messages to the draft
+          // add messages to the to active draft
           const draft = state.activeDraft
           if (draft && state.activeThreadId === draft.id) {
             draft.messages.push(action.payload)
             draft.updatedAt = new Date().toISOString()
 
-            // If the user has added a user message, finalize and persist the draft
+            // if conversation happend save it 
             if (action.payload.sender === 'user') {
               draft.title = getThreadTitle(draft.messages)
               const thread: ChatThread = {
