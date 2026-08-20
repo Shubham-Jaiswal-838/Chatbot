@@ -12,7 +12,6 @@ type VirtualizedListProps<T> = {
   estimateItemHeight?: (item: T, index: number) => number
   renderItem: (item: T, index: number) => React.ReactNode
   className?: string
-  containerClassName?: string
   onScrollToBottom?: boolean
   getItemKey?: (item: T, index: number) => string
 }
@@ -27,7 +26,6 @@ function VirtualizedList<T>({
   estimateItemHeight,
   renderItem,
   className = '',
-  containerClassName = '',
   onScrollToBottom = false,
   getItemKey = (_, index) => String(index),
 }: VirtualizedListProps<T>) {

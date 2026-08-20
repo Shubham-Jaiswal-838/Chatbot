@@ -25,6 +25,7 @@
 
 -  Virtualization
 -  Memo/Memoization 
+-  Dynamic imports 
 
 ## Styling
 

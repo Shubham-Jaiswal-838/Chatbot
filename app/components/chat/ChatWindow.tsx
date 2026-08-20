@@ -21,7 +21,6 @@ const ChatWindow = memo(function ChatWindow({
   onSuggestionSelect,
 }: ChatWindowProps) {
   const threads = useAppSelector((state) => state.chat.threads)
-  const activeDraft = useAppSelector((state) => state.chat.activeDraft)
   const activeThreadId = useAppSelector((state) => state.chat.activeThreadId)
   const messages: Message[] = threads.find((t) => t.id === activeThreadId)?.messages ?? []
 
@@ -49,8 +48,6 @@ const ChatWindow = memo(function ChatWindow({
     })
   }, [messages.length])
 
-  // Show empty-state suggestions whenever the active thread has no messages.
-  // This includes newly created drafts so clicking "New chat" immediately shows the prompt.
   const shouldShowEmptyState = showEmptySuggestions && messages.length === 0
 
   return (

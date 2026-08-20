@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Mic, PanelLeft, X } from 'lucide-react'
-import ChatWindow from '../components/chat/ChatWindow'
+const ChatWindow = dynamic(() => import('../components/chat/ChatWindow'), { ssr: false })
 import ChatInput from '../components/chat/ChatInput'
 import VoiceListeningIndicator from '../components/chat/VoiceListeningIndicator'
 import Sidebar from '../components/layout/Sidebar'

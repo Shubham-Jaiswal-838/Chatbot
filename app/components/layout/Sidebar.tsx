@@ -12,8 +12,10 @@ import {
   MessageCircleQuestion,
   PanelLeft,
 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import ChatHistoryList from '../chat/ChatHistoryList'
+
+const ChatHistoryList = dynamic(() => import('../chat/ChatHistoryList'), { ssr: false })
 
 const menuLinks = [
   { label: 'Home', icon: Home },
