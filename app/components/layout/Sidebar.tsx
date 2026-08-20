@@ -29,7 +29,7 @@ const projectLinks = [
   { label: 'Library', icon: Inbox },
 ]
 
-const Sidebar = memo(function Sidebar({ showCollapsedButton = true }: { showCollapsedButton?: boolean }) {
+const Sidebar = memo(function Sidebar({ showCollapsedButton = true, onClose }: { showCollapsedButton?: boolean; onClose?: () => void }) {
   const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -42,7 +42,13 @@ const Sidebar = memo(function Sidebar({ showCollapsedButton = true }: { showColl
       <div className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex items-center justify-between">
           {!collapsed && (
-            <h1 className="cursor-pointer text-lg font-semibold" onClick={() => router.push('/')}>
+            <h1
+              className="cursor-pointer text-lg font-semibold"
+              onClick={() => {
+                router.push('/')
+                onClose?.()
+              }}
+            >
               Visionary 2.0
             </h1>
           )}
@@ -58,39 +64,41 @@ const Sidebar = memo(function Sidebar({ showCollapsedButton = true }: { showColl
 
         {!collapsed && (
           <div className="mt-6">
-            <ChatHistoryList />
+            <ChatHistoryList onSelect={onClose} />
           </div>
         )}
 
         {!collapsed && <p className="mt-8 text-xs text-white/40">MENU</p>}
         <nav className={`flex flex-col gap-1 ${collapsed ? 'mt-8' : 'mt-3'}`}>
           {menuLinks.map(({ label, icon: Icon }) => (
-            <a
+            <button
               key={label}
-              href="#"
-              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/5 ${
+              type="button"
+              onClick={() => onClose?.()}
+              className={`flex  cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/5 ${
                 collapsed ? 'justify-center' : ''
               }`}
             >
               <Icon size={18} className="shrink-0 text-white/60" />
               {!collapsed && label}
-            </a>
+            </button>
           ))}
         </nav>
 
         {!collapsed && <p className="mt-8 text-xs text-white/40">PROJECTS</p>}
         <nav className={`flex flex-col gap-1 ${collapsed ? 'mt-4' : 'mt-3'}`}>
           {projectLinks.map(({ label, icon: Icon }) => (
-            <a
+            <button
               key={label}
-              href="#"
-              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/5 ${
+              type="button"
+              onClick={() => onClose?.()}
+              className={`flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 hover:bg-white/5 ${
                 collapsed ? 'justify-center' : ''
               }`}
             >
               <Icon size={18} className="shrink-0 text-white/60" />
               {!collapsed && label}
-            </a>
+            </button>
           ))}
         </nav>
       </div>

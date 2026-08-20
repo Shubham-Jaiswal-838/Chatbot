@@ -63,7 +63,7 @@ const ChatWindow = memo(function ChatWindow({
               How can I help you?
             </p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3 mb-6">
               {suggestionPrompts.map((prompt) => (
                 <button
                   key={prompt}

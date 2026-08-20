@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/lib/hooks'
 import { addMessage } from '@/lib/features/chatSlice'
 import { saveAttachment } from '@/lib/indexedDb'
 
-const defaultTags = ['retro', 'warm light']
+const defaultTags = ['retro']
 
 type ChatInputProps = {
   isListening: boolean

@@ -32,7 +32,7 @@ export default function ChatPage() {
             className="relative h-full w-[82%] max-w-[280px] bg-[#0f0f10]"
             onClick={(e) => e.stopPropagation()}
           >
-            <Sidebar showCollapsedButton={false} />
+            <Sidebar showCollapsedButton={false} onClose={() => setIsMobileSidebarOpen(false)} />
           </div>
         </div>
       )}
