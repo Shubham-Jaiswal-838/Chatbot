@@ -22,7 +22,7 @@
 - Preview URLs are stripped before persisting Redux data to keep the local storage payload smaller and avoid saving temporary browser object URLs.
 
 ## Optimization/Performance
-
+-  CSR/SSR/SSG
 -  Virtualization
 -  Memo/Memoization 
 -  Dynamic imports 
