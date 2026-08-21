@@ -154,6 +154,7 @@ const ChatInput = memo(function ChatInput({
             >
               {file.name}
               <button
+                type="button"
                 onClick={() => removeFile(file.name)}
                 className="cursor-pointer text-white/40 hover:text-white/70"
               >
@@ -175,12 +176,16 @@ const ChatInput = memo(function ChatInput({
             onChange={handleFileChange}
           />
           <button
+            type="button"
             onClick={handleFileClick}
             className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/70 hover:bg-white/15"
           >
             <ImagePlus size={16} />
           </button>
-          <button className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/70 hover:bg-white/15">
+          <button
+            type="button"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/70 hover:bg-white/15"
+          >
             <Shuffle size={16} />
           </button>
 
