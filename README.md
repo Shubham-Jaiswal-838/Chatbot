@@ -30,7 +30,7 @@
 ## Styling
 
 - UI styling is done with Tailwind CSS.
-- Custom styles are added in `app/globals.css`.
+- Custom global styles are defined in `app/globals.css`.
 
 ## Run locally
 
