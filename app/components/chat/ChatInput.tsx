@@ -51,7 +51,6 @@ const ChatInput = memo(function ChatInput({
     const attachments = await Promise.all(
       imageFiles.map(async (file) => {
         const attachmentId = crypto.randomUUID()
-        const previewUrl = URL.createObjectURL(file)
 
         await saveAttachment(attachmentId, file, file.name, file.type || 'image/jpeg')
 
@@ -60,7 +59,6 @@ const ChatInput = memo(function ChatInput({
           name: file.name,
           mimeType: file.type || 'image/jpeg',
           size: file.size,
-          previewUrl,
         }
       }),
     )
